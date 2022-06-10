@@ -4,6 +4,8 @@ const PORT = process.env.PORT;
 const cors = require("cors");
 const connectDb = require("./config/db");
 const colors = require("colors");
+const userRoutes = require("./routes/userRoutes");
+const { errorHandler, notFound } = require("./middleware/errorMiddleware");
 const app = express();
 
 //Database connection
@@ -11,6 +13,16 @@ connectDb();
 
 //Base middleware
 app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
+app.use("/api/users", userRoutes);
+
+//error middleware
+
+app.use(notFound);
+app.use(errorHandler);
+
 //Testing endpoint
 
 const data = [
