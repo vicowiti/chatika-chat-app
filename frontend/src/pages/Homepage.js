@@ -11,6 +11,7 @@ import {
 } from "@chakra-ui/react";
 import Login from "../components/auth/Login";
 import Register from "../components/auth/Register";
+import { BsChatSquareDots } from "react-icons/bs";
 
 const Homepage = () => {
   return (
@@ -26,8 +27,15 @@ const Homepage = () => {
         m="40px 0 15px 0"
         borderWidth="1px"
       >
-        <Text textAlign="center" fontSize="4xl" fontFamily="Kdam Thmor Pro">
-          Chatika!
+        <Text
+          textAlign="center"
+          fontSize="4xl"
+          fontFamily="Kdam Thmor Pro"
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+        >
+          Chatika! <BsChatSquareDots color="blue" />
         </Text>
       </Box>
       <Box bg="#FFF" p={4} borderRadius="lg" w="100%" borderWidth="1px">

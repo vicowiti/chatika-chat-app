@@ -1,5 +1,9 @@
 const express = require("express");
-const { registerUser, loginUser } = require("../controllers/userControllers");
+const {
+  registerUser,
+  loginUser,
+  allUsers,
+} = require("../controllers/userControllers");
 
 const router = express.Router();
 
@@ -8,6 +12,12 @@ const router = express.Router();
 //endpoint : /api/users
 
 router.route("/").post(registerUser);
+
+// @Desc: Get all users
+//Method: GET
+//endpoint : /api/users
+
+router.route("/").get(allUsers);
 
 // @Desc: User Login
 //Method: POST

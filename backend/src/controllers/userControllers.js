@@ -86,7 +86,23 @@ const loginUser = asyncHandler(async (req, res) => {
   //send back data with a token to the client
 });
 
+const allUsers = asyncHandler(async (req, res) => {
+  const keyword = req.query.search
+    ? {
+        $or: [
+          { name: { $regex: req.query.search, $options: "i" } },
+          { email: { $regex: req.query.search, $options: "i" } },
+        ],
+      }
+    : {};
+
+  const users = await (
+    await User.find(keyword)
+  ).find({ _id: { $ne: req.user._id } });
+});
+
 module.exports = {
   loginUser,
   registerUser,
+  allUsers,
 };
