@@ -4,6 +4,7 @@ const {
   loginUser,
   allUsers,
 } = require("../controllers/userControllers");
+const protect = require("../middleware/authMiddleware");
 
 const router = express.Router();
 
@@ -17,7 +18,7 @@ router.route("/").post(registerUser);
 //Method: GET
 //endpoint : /api/users
 
-router.route("/").get(allUsers);
+router.route("/").get(protect, allUsers);
 
 // @Desc: User Login
 //Method: POST
