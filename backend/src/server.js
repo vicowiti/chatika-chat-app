@@ -5,6 +5,7 @@ const cors = require("cors");
 const connectDb = require("./config/db");
 const colors = require("colors");
 const userRoutes = require("./routes/userRoutes");
+const chatRoutes = require("./routes/chatRoutes");
 const { errorHandler, notFound } = require("./middleware/errorMiddleware");
 const app = express();
 
@@ -17,6 +18,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use("/api/users", userRoutes);
+app.use("/api/chat", chatRoutes);
 
 //error middleware
 

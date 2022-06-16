@@ -17,7 +17,7 @@ const chatSchema = mongoose.Schema(
         ref: "User",
       },
     ],
-    latest: {
+    latestMessage: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Message",
     },
