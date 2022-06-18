@@ -71,9 +71,41 @@ const fetchChat = asyncHandler(async (req, res) => {
   }
 });
 
+const createGroupChat = asyncHandler(async (req, res) => {
+  if (!req.body.users || !req.body.name) {
+    return res.status(400).send({ message: "Please fill in all the fields." });
+  }
+
+  var users = JSON.parse(req.body.users);
+  if (users.length < 2) {
+    return res
+      .status(400)
+      .send("More than two users are required to form a group");
+  }
+
+  //add current user to the users array
+  users.push(req.user);
+
+  try {
+    const groupChat = await Chat.create({
+      chatName: req.body.name,
+      users: users,
+      isGroupChat: true,
+      groupChatAdmin: req.user,
+    });
+
+    const fullGroupChat = await Chat.findOne({ _id: groupChat._id })
+      .populate("users", "-password")
+      .populate("groupAdmin", "-password");
+  } catch (error) {
+    res.status(400);
+    throw new Error(error.message);
+  }
+});
 // const accessChat = asyncHandler(async (req, res) => {});
 
 module.exports = {
   accessChat,
   fetchChat,
+  createGroupChat,
 };
