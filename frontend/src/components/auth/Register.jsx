@@ -118,7 +118,7 @@ const Register = () => {
     } catch (error) {
       toast({
         title: "Error occurred.",
-        description: error.response.dat.message,
+        description: error.response.message,
         status: "error",
         duration: 5000,
         isClosable: true,
