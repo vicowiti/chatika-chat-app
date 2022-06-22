@@ -50,6 +50,7 @@ const accessChat = asyncHandler(async (req, res) => {
 });
 
 const fetchChat = asyncHandler(async (req, res) => {
+  console.log("hit");
   try {
     Chat.find({
       users: { $elemMatch: { $eq: req.user._id } },
@@ -63,6 +64,7 @@ const fetchChat = asyncHandler(async (req, res) => {
           path: "latestMessage.sender",
           select: "name pic email",
         });
+        console.log(results);
         res.status(200).send(results);
       });
   } catch (error) {
@@ -77,6 +79,7 @@ const createGroupChat = asyncHandler(async (req, res) => {
   }
 
   var users = JSON.parse(req.body.users);
+
   if (users.length < 2) {
     return res
       .status(400)
@@ -97,6 +100,7 @@ const createGroupChat = asyncHandler(async (req, res) => {
     const fullGroupChat = await Chat.findOne({ _id: groupChat._id })
       .populate("users", "-password")
       .populate("groupAdmin", "-password");
+    res.status(200).json(fullGroupChat);
   } catch (error) {
     res.status(400);
     throw new Error(error.message);
