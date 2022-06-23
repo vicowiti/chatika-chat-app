@@ -6,12 +6,14 @@ import { Box, Stack, Text } from "@chakra-ui/layout";
 import { AddIcon } from "@chakra-ui/icons";
 import ChatLoading from "../loggedusers/ChatLoading";
 import { getSender } from "../../config/Chatlogic";
+import GroupChatModal from "./GroupChatModal";
 
 const MyChats = () => {
   const [loggedUser, setLoggedUser] = useState();
   const { user, selectedChat, setSelectedChat, chats, setChats } = ChatState();
   const toast = useToast();
 
+  console.log(chats);
   const fetchChats = async () => {
     try {
       const config = {
@@ -67,13 +69,15 @@ const MyChats = () => {
         alignItems="center"
       >
         My Chats
-        <Button
-          display="flex"
-          rightIcon={<AddIcon />}
-          fontSize={{ base: "17px", md: "10px", lg: "17px" }}
-        >
-          New Group Chat
-        </Button>
+        <GroupChatModal>
+          <Button
+            display="flex"
+            rightIcon={<AddIcon />}
+            fontSize={{ base: "17px", md: "10px", lg: "17px" }}
+          >
+            New Group Chat
+          </Button>
+        </GroupChatModal>
       </Box>
       <Box
         display="flex"
@@ -99,7 +103,7 @@ const MyChats = () => {
                 borderRadius="lg"
               >
                 <Text>
-                  {!chat.isGroupChat
+                  {!chat?.isGroupChat
                     ? getSender(loggedUser, chat.users)
                     : chat.chatName}
                 </Text>
